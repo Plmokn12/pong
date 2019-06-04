@@ -1,7 +1,8 @@
 
-
 const cvs = document.getElementById("pong");
 const ctx = cvs.getContext("2d");
+
+
 
 const user = {
 	x : 0,
@@ -25,10 +26,10 @@ const ball = {
 	x : cvs.width/2,
 	y : cvs.height/2,
 	radius : 10,
-	speed : 5,
-	velocityX : 5,
-	velocityY : 5,
-	color : "white"
+	speed : 1,
+	velocityX : 1,
+	velocityY : 1,
+	color : "red"
 }
 
 const net = {
@@ -106,11 +107,12 @@ function resetBall() {
 	ball.x = cvs.width/2;
 	ball.y = cvs.height/2;
 
-	ball.speed= 5;
+	ball.speed= 1;
 	ball.velocityX = -ball.velocityX;
 }
 
 function update() {
+
 	ball.x += ball.velocityX;
 	ball.y += ball.velocityY;
 
@@ -135,7 +137,7 @@ function update() {
 		ball.velocityX = direction * ball.speed * Math.cos(angleRad);
 		ball.velocityY =             ball.speed * Math.sin(angleRad)
 
-		while (ball.speed < 10) {
+		if (ball.speed < 10) {
 			ball.speed += 0.25;
 		}
 		
@@ -143,18 +145,25 @@ function update() {
 
 	if (ball.x - ball.radius < 0) {
 		com.score++
+		// if (com.score > 1) {
+		// 	drawRect(0, 0, cvs.width, cvs.height, "black");
+		// 	drawText("9", cvs.width/2, cvs.height/2, "white")
+		// }
 		resetBall();
 	}else if (ball.x + ball.radius > cvs.width) {
 		user.score++
 		resetBall();
 	}
 
+
 }
+
+
 
 function game() {
 	update();
 	render();
 }
 
-const framesPerSecond = 1000;
+const framesPerSecond = 400;
 setInterval(game, 1000/framesPerSecond)
